@@ -77,11 +77,11 @@ Le frontend appelle `http://localhost:8080/api` (voir `frontend/.env.local`, non
 ## Déploiement (NAS)
 
 Le site est servi par le NAS QNAP (même machine que SAM Paris 12, Finance et Record-manager)
-sous le nom de domaine **https://foulees.juliotte-app.fr** (domaine `juliotte-app.fr` chez OVH).
+sous le nom de domaine **https://fouleesparis12.juliotte-app.fr** (domaine `juliotte-app.fr` chez OVH).
 
-1. **DNS (OVH)** — zone `juliotte-app.fr` : entrée `CNAME` `foulees` →
+1. **DNS (OVH)** — zone `juliotte-app.fr` : entrée `CNAME` `fouleesparis12` →
    `samparis12-qnap.mycloudnas.com.` (suit automatiquement l'IP de la box, comme les noms
-   myQNAPcloud). Attendre la propagation : `dig +short foulees.juliotte-app.fr` doit renvoyer
+   myQNAPcloud). Attendre la propagation : `dig +short fouleesparis12.juliotte-app.fr` doit renvoyer
    l'IP de la box.
 2. **Fichiers** — depuis le Mac :
 
@@ -96,8 +96,8 @@ sous le nom de domaine **https://foulees.juliotte-app.fr** (domaine `juliotte-ap
    `.env.example`, puis `docker compose up -d --build` dans ce dossier (`bdd-mysql` n'est pas un
    service de ce compose : il n'est pas touché). Le site écoute sur le port **8096**.
 5. **Proxy inverse + HTTPS** — dans l'outil qui sert déjà les trois noms myQNAPcloud : règle
-   `foulees.juliotte-app.fr` (HTTPS 443) → `http://localhost:8096`, avec un certificat
-   Let's Encrypt pour `foulees.juliotte-app.fr` et la redirection HTTP → HTTPS.
+   `fouleesparis12.juliotte-app.fr` (HTTPS 443) → `http://localhost:8096`, avec un certificat
+   Let's Encrypt pour `fouleesparis12.juliotte-app.fr` et la redirection HTTP → HTTPS.
 
 `_ancien/` contient une copie du contenu de l'ancien site (articles et images d'origine) ;
 il n'est ni versionné ni déployé.
