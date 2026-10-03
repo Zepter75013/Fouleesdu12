@@ -1,3 +1,6 @@
+-- Les accents doivent être lus en UTF-8 quel que soit le client mysql (celui de bdd-mysql est en latin1 par défaut).
+SET NAMES utf8mb4;
+
 -- Foulées du 12ème : éditions de la course (la plus récente est l'édition à venir),
 -- avec ses départs et créneaux de retrait des dossards, et pour les éditions passées
 -- les liens vers résultats, albums photos et vidéos, rangés par groupe.

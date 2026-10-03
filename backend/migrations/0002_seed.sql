@@ -1,3 +1,6 @@
+-- Les accents doivent être lus en UTF-8 quel que soit le client mysql (celui de bdd-mysql est en latin1 par défaut).
+SET NAMES utf8mb4;
+
 -- Contenu initial : édition à venir et archives reprises de l'ancien site foulees.samparis12.org.
 -- Idempotent : chaque ligne est identifiée par une clé unique (année, ordre), INSERT IGNORE ne la recrée pas.
 
