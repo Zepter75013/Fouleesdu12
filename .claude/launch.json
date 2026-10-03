@@ -1,0 +1,6 @@
+{
+  "version": "0.0.1",
+  "configurations": [
+    { "name": "foulees-front", "runtimeExecutable": "npm", "runtimeArgs": ["--prefix", "frontend", "run", "dev", "--", "--port", "5180"], "port": 5180 }
+  ]
+}

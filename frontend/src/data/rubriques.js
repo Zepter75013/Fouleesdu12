@@ -1,0 +1,28 @@
+// Rubriques du site, dans l'ordre des bornes de l'accueil (km 1 à 8). Le menu et l'accueil
+// en dérivent tous les deux : une borne = une rubrique = une entrée de menu, même numéro.
+export const BORNES = [
+  { id: 'course', theme: 'La course', titre: 'Un 5 km et un 10 km sur route, Label FFA',
+    texte: "Organisées par la SAM Paris 12, l'OMS du 12e et la mairie du 12e arrondissement : une course à taille humaine, qualificative pour les Championnats de France, encadrée par les bénévoles du club.",
+    to: '/la-course', lien: 'Découvrir la course' },
+  { id: 'parcours', theme: 'Le parcours', titre: 'Une boucle plate autour du lac Daumesnil',
+    texte: "Départ avenue de Gravelle, temple bouddhiste, parc zoologique, Porte Dorée, pelouse de Reuilly, puis arrivée sur la piste du vélodrome Jacques Anquetil, ancienne arrivée du Tour de France.",
+    to: '/parcours', lien: 'Voir le parcours' },
+  { id: 'kids', theme: "Kid's Foulées", titre: 'Deux courses pour les 7 – 11 ans',
+    texte: "1 000 m pour les 7 à 9 ans, 1 500 m pour les 10 et 11 ans, départ et arrivée dans le vélodrome. Sans certificat médical, 100 enfants maximum par course.",
+    to: '/courses-enfants', lien: 'Inscrire les enfants' },
+  { id: 'chimps', theme: 'I Run for Chimps', titre: 'Courir utile pour les chimpanzés de Sebitoli',
+    texte: "Le dossard solidaire soutient le Sebitoli Chimpanzee Project en Ouganda : lutte contre le braconnage et protection de la forêt tropicale. En cadeau, un t-shirt illustré fabriqué en France.",
+    to: '/i-run-for-chimps', lien: 'Choisir le dossard solidaire' },
+  { id: 'eco', theme: 'Course éco-responsable', titre: 'Vers le zéro impact',
+    texte: "Ravitaillement bio et local, aucune bouteille plastique, gobelets réutilisables, médaille en bois labellisée PEFC : une course douce pour la planète.",
+    to: '/eco-responsable', lien: 'Nos engagements' },
+  { id: 'infos', theme: 'Infos pratiques', titre: 'Dossards, accès, vestiaires, règlement',
+    texte: "Retrait des dossards le vendredi et le samedi, vestiaires et douches au vélodrome, métro ligne 8. Sept sas de départ et des meneurs d'allure sur le 10 km.",
+    to: '/infos-pratiques', lien: 'Préparer sa venue' },
+  { id: 'resultats', theme: 'Résultats et photos', titre: 'Toutes les éditions depuis 2016',
+    texte: "Classements Protiming, albums photos des bénévoles et des photographes, vidéos de départ et d'arrivée, recherche des photos par numéro de dossard.",
+    to: '/resultats', lien: 'Retrouver sa course' },
+  { id: 'club', theme: 'Club organisateur', titre: 'La SAM Paris 12, club fondé en 1887',
+    texte: "Un des premiers clubs d'athlétisme de la capitale, installé dans le 12e : quinze entraîneurs hors stade, de la marche nordique au trail, et 250 bénévoles le jour des Foulées.",
+    to: '/club-organisateur', lien: 'Découvrir le club' },
+]

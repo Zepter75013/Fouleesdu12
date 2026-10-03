@@ -1,0 +1,18 @@
+# Node / frontend
+frontend/node_modules/
+frontend/dist/
+frontend/.env.local
+frontend/.env*.local
+
+# Go
+backend/foulees12-backend
+/tmp/
+
+# Env files with real secrets
+.env
+
+# OS
+.DS_Store
+
+# Copie de travail du contenu de l'ancien site (articles, images d'origine)
+/_ancien/
