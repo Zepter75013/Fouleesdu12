@@ -76,13 +76,28 @@ Le frontend appelle `http://localhost:8080/api` (voir `frontend/.env.local`, non
 
 ## Déploiement (NAS)
 
-Copier `.env.example` en `.env` et renseigner les identifiants de la base (à créer dans
-`bdd-mysql`, comme ci-dessus mais avec `'%'` comme hôte), puis
-`docker compose up -d --build`. Le frontend écoute sur le port **8096**, l'API (debug) sur
-**8095** ; nginx du frontend renvoie `/api/` vers le backend en interne.
+Le site est servi par le NAS QNAP (même machine que SAM Paris 12, Finance et Record-manager)
+sous le nom de domaine **https://foulees.juliotte-app.fr** (domaine `juliotte-app.fr` chez OVH).
 
-Migrations : copier `backend/migrations/*.sql` dans `bdd-mysql` et les appliquer dans l'ordre
-(même procédure que pour SAM Paris 12).
+1. **DNS (OVH)** — zone `juliotte-app.fr` : entrée `CNAME` `foulees` →
+   `samparis12-qnap.mycloudnas.com.` (suit automatiquement l'IP de la box, comme les noms
+   myQNAPcloud). Attendre la propagation : `dig +short foulees.juliotte-app.fr` doit renvoyer
+   l'IP de la box.
+2. **Fichiers** — depuis le Mac :
+
+   ```bash
+   rsync -avz --delete -e "ssh -p 2222" --exclude='.env' --exclude='.env.*' --exclude='frontend/node_modules/' --exclude='frontend/dist/' --exclude='.git/' --exclude='.claude/' --exclude='/_ancien/' --exclude='/videos/' --exclude='.DS_Store' ~/Documents/Developpement/Fouléesdu12/ Laurent@192.168.1.79:/share/CACHEDEV1_DATA/Container/Fouleesdu12/
+   ```
+
+3. **Base** — créer la base et l'utilisateur dans `bdd-mysql` (hôte `'%'`), puis appliquer
+   `backend/migrations/0001_init.sql` et `0002_seed.sql` (copie dans le conteneur avec
+   `docker cp`, puis `source` dans le client mysql).
+4. **`.env`** sur le NAS (`/share/CACHEDEV1_DATA/Container/Fouleesdu12/.env`) à partir de
+   `.env.example`, puis `docker compose up -d --build` dans ce dossier (`bdd-mysql` n'est pas un
+   service de ce compose : il n'est pas touché). Le site écoute sur le port **8096**.
+5. **Proxy inverse + HTTPS** — dans l'outil qui sert déjà les trois noms myQNAPcloud : règle
+   `foulees.juliotte-app.fr` (HTTPS 443) → `http://localhost:8096`, avec un certificat
+   Let's Encrypt pour `foulees.juliotte-app.fr` et la redirection HTTP → HTTPS.
 
 `_ancien/` contient une copie du contenu de l'ancien site (articles et images d'origine) ;
 il n'est ni versionné ni déployé.
