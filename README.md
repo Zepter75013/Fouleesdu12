@@ -79,10 +79,10 @@ Le frontend appelle `http://localhost:8080/api` (voir `frontend/.env.local`, non
 Le site est servi par le NAS QNAP (même machine que SAM Paris 12, Finance et Record-manager)
 sous le nom de domaine **https://fouleesparis12.juliotte-app.fr** (domaine `juliotte-app.fr` chez OVH).
 
-1. **DNS (OVH)** — zone `juliotte-app.fr` : entrée `CNAME` `fouleesparis12` →
-   `samparis12-qnap.mycloudnas.com.` (suit automatiquement l'IP de la box, comme les noms
-   myQNAPcloud). Attendre la propagation : `dig +short fouleesparis12.juliotte-app.fr` doit renvoyer
-   l'IP de la box.
+1. **DNS (OVH)** — zone `juliotte-app.fr` : entrée `A` `fouleesparis12` → `82.67.178.147`
+   (IP fixe de la box Free, qui renvoie les ports 80/443 vers le NAS). C'est le proxy inverse
+   du NAS qui choisit l'application d'après le nom demandé. Vérifier la propagation :
+   `dig +short fouleesparis12.juliotte-app.fr` doit renvoyer cette IP.
 2. **Fichiers** — depuis le Mac :
 
    ```bash
