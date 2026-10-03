@@ -24,7 +24,7 @@ export default function Home() {
         </div>
         <div className="shell">
           <div className="hero__text">
-            <p className="eyebrow">{EDITION.numero}e édition · Course Label FFA · Bois de Vincennes</p>
+            <p className="eyebrow">{EDITION.numero}<sup>e</sup> édition · Course Label FFA · Bois de Vincennes</p>
             <h1>Les Foulées du <em>12<sup>e</sup></em></h1>
             <p className="lead">
               5 km, 10 km et courses enfants dans le Bois de Vincennes, arrivée sur la piste du vélodrome

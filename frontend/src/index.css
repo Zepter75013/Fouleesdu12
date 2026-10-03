@@ -730,6 +730,8 @@ footer {
 }
 
 /* ---------- Spécifique aux Foulées ---------- */
+/* Exposant des ordinaux (12e, 22e édition) toujours en minuscule, même dans les titres en capitales. */
+sup { text-transform: none; }
 .dot-status--off { background: var(--stone); }
 .brand b sup { font-size: 0.6em; }
 .next-run__ref { color: var(--stone); font-size: 0.72rem; }

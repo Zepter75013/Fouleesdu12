@@ -1,9 +1,14 @@
 // Numéro de version du site (convention semver : MAJOR.MINOR.PATCH).
 // Ajouter une entrée en haut de CHANGELOG à chaque changement notable et
 // mettre à jour APP_VERSION en conséquence.
-export const APP_VERSION = '0.0.1'
+export const APP_VERSION = '0.0.2'
 
 export const CHANGELOG = [
+  {
+    version: '0.0.2',
+    date: '3 octobre 2026',
+    notes: "Le « e » des numéros (Foulées du 12e, 22e édition, 21e édition…) reste en minuscule, en exposant, y compris dans les titres en capitales. Site en ligne sur https://fouleesparis12.juliotte-app.fr.",
+  },
   {
     version: '0.0.1',
     date: '3 octobre 2026',
