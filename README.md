@@ -86,7 +86,7 @@ sous le nom de domaine **https://fouleesparis12.juliotte-app.fr** (domaine `juli
 2. **Fichiers** — depuis le Mac :
 
    ```bash
-   rsync -avz --delete -e "ssh -p 2222" --exclude='.env' --exclude='.env.*' --exclude='frontend/node_modules/' --exclude='frontend/dist/' --exclude='.git/' --exclude='.claude/' --exclude='/_ancien/' --exclude='/videos/' --exclude='.DS_Store' ~/Documents/Developpement/Fouléesdu12/ Laurent@192.168.1.79:/share/CACHEDEV1_DATA/Container/Fouleesdu12/
+   rsync -avz --delete -e "ssh -p 2222" --include='.env.example' --exclude='.env' --exclude='.env.*' --exclude='frontend/node_modules/' --exclude='frontend/dist/' --exclude='.git/' --exclude='.claude/' --exclude='/_ancien/' --exclude='/videos/' --exclude='.DS_Store' ~/Documents/Developpement/Fouléesdu12/ Laurent@192.168.1.79:/share/CACHEDEV1_DATA/Container/Fouleesdu12/
    ```
 
 3. **Base** — créer la base et l'utilisateur dans `bdd-mysql` (hôte `'%'`), puis appliquer
