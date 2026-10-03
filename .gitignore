@@ -16,3 +16,6 @@ backend/foulees12-backend
 
 # Copie de travail du contenu de l'ancien site (articles, images d'origine)
 /_ancien/
+
+# Vidéos de démonstration (trop lourdes pour le dépôt)
+/videos/
