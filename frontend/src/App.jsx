@@ -3,6 +3,7 @@ import { Route, Routes, useLocation } from 'react-router-dom'
 import Header from './components/Header.jsx'
 import Footer from './components/Footer.jsx'
 import { EditionProvider } from './lib/edition.jsx'
+import EasterEgg from './components/EasterEgg.jsx'
 import Home from './pages/Home.jsx'
 import NotFound from './pages/NotFound.jsx'
 import APropos from './pages/APropos.jsx'
@@ -44,6 +45,7 @@ export default function App() {
   return (
     <EditionProvider>
       <ScrollManager />
+      <EasterEgg />
       <Header />
       <Routes>
         {PAGES.map(([path, Page]) => <Route key={path} path={path} element={<Page />} />)}

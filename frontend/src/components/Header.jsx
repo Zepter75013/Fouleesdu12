@@ -51,6 +51,20 @@ export default function Header() {
   const [group, setGroup] = useState(null) // sous-menu desktop ouvert
   const navRef = useRef(null)
   const EDITION = useEdition()
+  const logoClicks = useRef({ n: 0, t: 0 })
+
+  // 5 clics rapprochés sur le logo : œuf de Pâques (utile sur mobile).
+  const onLogoClick = (e) => {
+    const c = logoClicks.current
+    const now = Date.now()
+    c.n = now - c.t < 700 ? c.n + 1 : 1
+    c.t = now
+    if (c.n >= 5) {
+      c.n = 0
+      e.preventDefault()
+      window.dispatchEvent(new Event('sam-game'))
+    }
+  }
 
   // Le sous-menu se ferme au choix d'un lien, au clic à l'extérieur ou avec Échap.
   useEffect(() => {
@@ -68,7 +82,7 @@ export default function Header() {
   return (
     <header>
       <div className="shell nav">
-        <Link className="brand" to="/">
+        <Link className="brand" to="/" onClick={onLogoClick}>
           <img src="/logo.png" alt="" width="42" height="38" />
           <span>
             <b>Foulées du 12<sup>e</sup></b>

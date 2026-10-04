@@ -1,9 +1,14 @@
 // Numéro de version du site (convention semver : MAJOR.MINOR.PATCH).
 // Ajouter une entrée en haut de CHANGELOG à chaque changement notable et
 // mettre à jour APP_VERSION en conséquence.
-export const APP_VERSION = '0.0.3'
+export const APP_VERSION = '0.1.0'
 
 export const CHANGELOG = [
+  {
+    version: '0.1.0',
+    date: '5 octobre 2026',
+    notes: "Un petit secret s'est glissé sur le site : un mini-jeu où le coureur de la SAM grimpe vers les 10 km des Foulées. À toi de le trouver ! Sur téléphone, la page ne déborde plus de l'écran (elle était dézoomée à cause du menu) et toucher à côté du menu le referme.",
+  },
   {
     version: '0.0.3',
     date: '4 octobre 2026',
