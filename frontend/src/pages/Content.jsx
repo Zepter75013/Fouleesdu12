@@ -1,6 +1,5 @@
 import { Link } from 'react-router-dom'
 import { Legs } from '../components/Legs.jsx'
-import { Ordinaux } from '../components/Ordinal.jsx'
 import { InscriptionButton } from '../components/Header.jsx'
 import { DOCS } from '../data/edition.js'
 import { useEdition } from '../lib/edition.jsx'
@@ -359,7 +358,7 @@ export function ResultatsPage() {
       ...(editions || []).map((e) => ({
           id: `edition-${e.annee}`,
           eyebrow: `Édition ${e.annee}`,
-          title: <Ordinaux>{e.titre || `Les Foulées ${e.annee}`}</Ordinaux>,
+          title: e.titre || `Les Foulées ${e.annee}`,
           wide: true,
           children: (
             <>

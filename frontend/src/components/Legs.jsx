@@ -1,22 +1,56 @@
-import { useEffect, useRef } from 'react'
+import { useEffect, useRef, useState } from 'react'
+import { Ordinaux } from './Ordinal.jsx'
 
-// Borne kilométrique : calotte colorée « KM » et numéro de la rubrique.
+// Borne kilométrique : kakemono du club (bandes en diagonale, « N Km », logo, « SAM PARIS 12 »).
+// Grisé tant qu'il n'est pas la borne en cours, aux couleurs du club quand il l'est.
 export function Borne({ n }) {
+  // 4 bandes diagonales égales (même largeur, même écart), assez courtes pour ne pas toucher le texte du bas.
+  const bandes = [0, 1, 2, 3].map((k) => {
+    const c1 = 2 + 4.8 * k
+    const c2 = c1 + 2.4
+    return `M0 ${c1} L${(c1 / 0.6).toFixed(1)} 0 L${(c2 / 0.6).toFixed(1)} 0 L0 ${c2} Z`
+  })
+  const bande = bandes.map((d) => <path key={d} className="borne-red" d={d} />)
   return (
-    <svg className="borne" viewBox="0 0 64 88" role="img" aria-label={`Kilomètre ${n}`}>
-      <path className="borne-body" d="M8 82 V32 Q8 6 32 6 Q56 6 56 32 V82 Z" />
-      <path className="borne-cap" d="M8 32 Q8 6 32 6 Q56 6 56 32 Z" />
-      <text className="borne-km" x="32" y="26">KM</text>
-      <text className="borne-n" x="32" y="64">{String(n).padStart(2, '0')}</text>
-      <line className="borne-ground" x1="2" y1="82" x2="62" y2="82" />
+    <svg className="borne" viewBox="0 0 100 158" role="img" aria-label={`Kilomètre ${n}`}>
+      <defs>
+        <clipPath id="borne-clip"><rect x="2" y="5" width="96" height="141" /></clipPath>
+      </defs>
+      <rect className="borne-bar" x="0" y="0" width="100" height="5" rx="1.5" />
+      <rect className="borne-panel" x="2" y="5" width="96" height="141" />
+      <g clipPath="url(#borne-clip)">
+        <g transform="translate(2 5)">{bande}</g>
+        <g transform="translate(98 146) rotate(180)">{bande}</g>
+      </g>
+      <text className="borne-num" x="50" y="68">
+        <tspan className="borne-n">{n}</tspan>
+        <tspan className="borne-unit" dx="3">Km</tspan>
+      </text>
+      <image className="borne-logo" href="/logo.png" x="29" y="76" width="42" height="37.5" />
+      <rect className="borne-red" x="22" y="119" width="56" height="2" />
+      <text className="borne-club" x="50" y="135" textLength="60" lengthAdjust="spacingAndGlyphs">SAM PARIS 12</text>
+      <rect className="borne-bar" x="0" y="146" width="100" height="6" rx="1.5" />
+      <rect className="borne-bar" x="22" y="152" width="14" height="4" rx="1" />
+      <rect className="borne-bar" x="64" y="152" width="14" height="4" rx="1" />
     </svg>
   )
 }
 
 // Petit coureur en maillot SAM (blanc à rayures rouges) qui court de borne en borne quand on fait défiler.
 // Il suit la route : tout droit le long d'une borne, puis une courbe vers la suivante.
+const PEAUX = ['#f1c7a1', '#8a5a3c'] // claire, foncée
+const CHEVEUX_CLAIRS = ['#3a2a1d', '#d9b36a', '#1c1917', '#8a3b1d']
+
+// Au hasard à chaque visite : homme ou femme, peau claire ou foncée.
+function tirerCoureur() {
+  const pick = (a) => a[Math.floor(Math.random() * a.length)]
+  const foncee = Math.random() < 0.5
+  return { femme: Math.random() < 0.5, peau: PEAUX[foncee ? 1 : 0], cheveux: foncee ? '#1a1512' : pick(CHEVEUX_CLAIRS) }
+}
+
 export function Runner() {
   const ref = useRef(null)
+  const [look] = useState(tirerCoureur)
 
   useEffect(() => {
     const el = ref.current
@@ -53,7 +87,11 @@ export function Runner() {
       const x = cx[i] + (cx[i + 1] - cx[i]) * (t * t * (3 - 2 * t))
       if (last !== null && Math.abs(x - last) > 0.4) faceLeft = x < last
       last = x
-      el.style.transform = `translate(${x - 20}px, ${y - 54}px)`
+      // À hauteur d'une borne, le coureur se range à sa droite pour ne pas la cacher.
+      const near = Math.min(...cy.map((v) => Math.abs(y - v)))
+      const k = Math.min(Math.max(near / 80, 0), 1)
+      const side = 52 * (1 - k * k * (3 - 2 * k))
+      el.style.transform = `translate(${x + side - 30}px, ${y - 81}px)`
       el.classList.toggle('is-left', faceLeft)
     }
 
@@ -79,13 +117,25 @@ export function Runner() {
   }, [])
 
   return (
-    <div className="runner" ref={ref} aria-hidden="true">
-      <svg viewBox="0 0 40 56" width="40" height="56">
+    <div
+      className={`runner${look.femme ? ' is-woman' : ''}`}
+      ref={ref}
+      style={{ '--skin': look.peau, '--hair': look.cheveux }}
+      aria-hidden="true"
+    >
+      <svg viewBox="0 0 40 56" width="60" height="84">
         <defs>
           <clipPath id="runner-torso"><path d="M14 14 L28 14 L27 33 L15 33 Z" /></clipPath>
         </defs>
         <ellipse className="runner-shadow" cx="20" cy="54" rx="11" ry="2" />
         <g className="runner-body">
+          <g className="runner-flame">
+            <path className="runner-pole" d="M12.6 34 L11 -4" />
+            <path className="runner-flag" d="M-8 -18 Q9 -19 11 -4 L11 22 L-7 25 Z" />
+            <path className="runner-binding" d="M-8 -18 Q9 -19 11 -4 L11 22" />
+            <text className="runner-flag-text" x="1.5" y="2" transform="rotate(-90 1.5 -4)">50</text>
+            <text className="runner-flag-min" x="1.5" y="17.2" transform="rotate(-90 1.5 14)">min</text>
+          </g>
           <g className="runner-arm runner-arm--b"><path d="M20 17 L13 26 L16 33" /><path className="runner-sleeve" d="M20 17 L16.8 21" /><path className="runner-cuff" d="M16.9 20.8 L16.1 21.8" /></g>
           <g className="runner-leg runner-leg--b"><path d="M20 35 L18 45 L21 53" /><path className="runner-shoe" d="M19 53 H25" /></g>
           <path className="runner-torso" d="M14 14 L28 14 L27 33 L15 33 Z" />
@@ -96,6 +146,7 @@ export function Runner() {
           </g>
           <path className="runner-collar" d="M17 14.2 Q22 18 27 14.2" />
           <path className="runner-shorts" d="M15 33 H27 L28 40.5 H14 Z" />
+          {look.femme && <path className="runner-hair runner-pony" d="M17.4 4.4 Q9.6 2.6 10.6 11.4 Q10.9 14.6 12.6 15.6 Q13.4 9.6 17 7.4 Z" />}
           <circle className="runner-skin" cx="22" cy="8" r="5.2" />
           <path className="runner-hair" d="M16.8 8.4 Q16.4 2.6 22 2.6 Q27.8 2.6 27.2 7.6 Q23 4.6 16.8 8.4 Z" />
           <g className="runner-leg runner-leg--a"><path d="M23 35 L27 45 L23 53" /><path className="runner-shoe" d="M22 53 H28" /></g>
@@ -141,7 +192,7 @@ export function Legs({ sections }) {
           <div className="leg__marker"><Borne n={i + 1} /></div>
           <div className={`leg__body${s.wide ? ' leg__body--wide' : ''}`}>
             {s.eyebrow && <p className="eyebrow">{s.eyebrow}</p>}
-            {s.title && <h2>{s.title}</h2>}
+            {s.title && <h2><Ordinaux>{s.title}</Ordinaux></h2>}
             {s.children}
           </div>
         </section>

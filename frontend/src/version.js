@@ -1,9 +1,14 @@
 // Numéro de version du site (convention semver : MAJOR.MINOR.PATCH).
 // Ajouter une entrée en haut de CHANGELOG à chaque changement notable et
 // mettre à jour APP_VERSION en conséquence.
-export const APP_VERSION = '0.0.2'
+export const APP_VERSION = '0.0.3'
 
 export const CHANGELOG = [
+  {
+    version: '0.0.3',
+    date: '4 octobre 2026',
+    notes: "Bornes et petit coureur identiques au site de la SAM Paris 12 : bornes au format kakemono du club (« N Km », logo, SAM PARIS 12), grisées sauf la borne en cours ; coureur agrandi avec la flamme de meneur d'allure, homme ou femme, peau claire ou foncée au hasard, qui se range à côté de la borne. Le texte du cadre « Prochaine édition » est de nouveau lisible en mode clair.",
+  },
   {
     version: '0.0.2',
     date: '3 octobre 2026',
